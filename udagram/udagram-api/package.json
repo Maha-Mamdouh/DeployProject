@@ -12,7 +12,11 @@
     "dev": "npx ts-node-dev --respawn --transpile-only ./src/server.ts",
     "prod": "npx tsc && node ./www/server.js",
     "clean": "rm -rf www",
-    "deploy": "npm run build && eb list && eb use udagram-api-dev && eb deploy",
+    "deployold": "npm run build && eb list && eb use udagram-api-dev && eb deploy",
+    "deploysh": "chmod +x bin/deploy.sh && bin/deploy.sh",
+
+    "deploy": "npm run build && deploysh",
+
     "buildold": "npm install . && npm run clean && tsc && cp -rf src/config www/config && cp -R .elasticbeanstalk www/.elasticbeanstalk && cp .npmrc www/.npmrc && cp package.json www/package.json && cd www && zip -r Archive.zip . && cd ..",
     "build2": "npm run clean && cp -rf client/ www/client && cp -rf node_modules www/node_modules && cp -rf public/ www/public && cp config.js contacts.js server.js package.json www",
     "build": "npm install . && npm run clean && tsc && cp -rf src/config www/config && cp .npmrc www/.npmrc && cp package.json www/package.json && cd www && zip -r Archive.zip . && cd ..",
