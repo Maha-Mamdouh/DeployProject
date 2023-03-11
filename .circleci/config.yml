@@ -66,7 +66,9 @@ jobs:
           key: ng-project-{{.Environment.CIRCLE_BRANCH }}-{{ checksum "package-lock.json" }}
           paths:
             - "node_modules"
-            
+      # Test the source code
+      - run: npm run frontend:test 
+        
   deploy:
     docker:
       - image: "cimg/base:stable"
