@@ -55,7 +55,6 @@ jobs:
           steps:
             - run: 
               command: |
-              echo "TODO: test the frontend app"
               npm run frontend:test
             - store_test_results:
               path: test-results
