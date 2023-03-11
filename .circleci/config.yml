@@ -53,7 +53,7 @@ jobs:
   # deploy step will run only after manual approval
   test:
     docker:
-      - image: "cimg/base:stable"
+      - image: "cimg/node:10-browsers"
     steps:
       - node/install:
           node-version: '14.15' 
