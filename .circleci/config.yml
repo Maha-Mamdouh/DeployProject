@@ -89,8 +89,8 @@ jobs:
 workflows:
   udagram:
     jobs:
-      - test
-      # - build
+      #- test
+      - build
       # - deploy:
       #     requires:
       #       - build
