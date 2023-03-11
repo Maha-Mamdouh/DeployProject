@@ -53,25 +53,37 @@ jobs:
   # deploy step will run only after manual approval
   test:
     docker:
-      - image: "cimg/base:stable"
+      - image: circleci/node: 14.21.2-browsers
     steps:
-      - node/install:
-          node-version: '14.15' 
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package-lock.json" }}
-            - v1-dependencies-
-      - run:
-          name: Install Front-End Dependencies
-          command: |
-            npm run frontend:install
-      - run:
-          name: Testing the project
-          command: |
-            npm run frontend:test
-      - store_test_results:
-          path: test-results
+                # Checkout the code from the branch into the working_directory
+                - checkout
+                # Restore local dependencies from cache
+                - restore_cache:
+                    keys:
+                    - v1-dependencies-{{ checksum "/udagram-frontend/package-lock.json" }}
+                    - v1-dependencies-
+                # Install project dependencies
+                - run:
+                    name: Install local dependencies
+                    command: npm run frontend:install
+                # Cache local dependencies if they don't exist
+                - save_cache:
+                    key: v1-dependencies-{{ checksum ""/udagram-frontend/package-lock.json" }}
+                    paths:
+                        - node_modules
+                # Test the source code
+                - run:
+                    name: Testing
+                    command: frontend:test 
+                # End to End test
+                - run:
+                    name: End to End Test
+                    command: npm run frontend:e2e
+
+
+
+
+
   deploy:
     docker:
       - image: "cimg/base:stable"
