@@ -53,10 +53,13 @@ jobs:
   # deploy step will run only after manual approval
   test:
     docker:
-      - image: circleci/node:15.0.1-browsers
+      - image: circleci/node:16.13.0-browsers
     steps:
                 # Checkout the code from the branch into the working_directory
                 - checkout
+                - run:
+                    name: Show current branch
+                    command: echo ${CIRCLE_BRANCH}
                 # Restore local dependencies from cache
                 - restore_cache:
                     keys:
