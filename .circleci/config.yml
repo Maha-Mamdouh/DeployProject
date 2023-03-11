@@ -55,7 +55,7 @@ jobs:
           steps:
             - run: 
               command: |
-              npm run frontend:test
+                npm run frontend:test
             - store_test_results:
               path: test-results
   # deploy step will run only after manual approval
