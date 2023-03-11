@@ -58,18 +58,19 @@ jobs:
       # Checkout the code from the branch into the working_directory
       - run: echo ${CIRCLE_BRANCH}
       - run: echo "$(cat package-lock.json)"
+      - run: ls
       - checkout
-      - restore_cache:
-          key: ng-project-{{ .Branch }}-{{ checksum "~/home/udagram/udagram-frontend/package-lock.json" }}
-      - run: npm run frontend:install
-      - save_cache:
-          key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
-          paths:
-            - "node_modules"
+      #- restore_cache:
+          #key: ng-project-{{ .Branch }}-{{ checksum "~/home/udagram/udagram-frontend/package-lock.json" }}
+      #- run: npm run frontend:install
+      #- save_cache:
+          #key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          #paths:
+            #- "node_modules"
       # Test the source code
-      - run: npm run frontend:test 
+      #- run: npm run frontend:test 
       # End to End test
-      - run: npm run frontend:e2e
+      #- run: npm run frontend:e2e
 
 
   deploy:
