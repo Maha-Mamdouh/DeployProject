@@ -60,7 +60,7 @@ jobs:
                 # Restore local dependencies from cache
                 - restore_cache:
                     keys:
-                    - v1-dependencies-{{ checksum "/udagram/udagram-api/package-lock.json" }}
+                    - v1-dependencies-{{ checksum "/udagram/udagram-frontend/package-lock.json" }}
                     - v1-dependencies-
                 # Install project dependencies
                 - run:
@@ -74,7 +74,7 @@ jobs:
                 # Test the source code
                 - run:
                     name: Testing
-                    command: frontend:test 
+                    command: npm run frontend:test 
                 # End to End test
                 - run:
                     name: End to End Test
@@ -105,7 +105,7 @@ workflows:
   udagram:
     jobs:
       - test
-      - build
-      - deploy:
-          requires:
-            - build
+      # - build
+      # - deploy:
+      #     requires:
+      #       - build
