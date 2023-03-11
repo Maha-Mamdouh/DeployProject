@@ -50,13 +50,22 @@ jobs:
           command: |
             echo "TODO: Build the backend API"
             npm run api:build
-      - run:
-          name: front test
-          command: |
-                npm run frontend:test
-      - store_test_results:
-          path: test-results
   # deploy step will run only after manual approval
+  test:
+    docker:
+      - image: "cimg/base:stable"
+    steps:
+      - checkout
+      - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "package-lock.json" }}
+          - v1-dependencies-
+
+      - run:
+        name: Testing the project
+        command: npm run frontend:test
+              - store_test_results:
+          path: test-results
   deploy:
     docker:
       - image: "cimg/base:stable"
@@ -77,6 +86,7 @@ jobs:
 workflows:
   udagram:
     jobs:
+      - test
       - build
       - deploy:
           requires:
