@@ -53,7 +53,7 @@ jobs:
   # deploy step will run only after manual approval
   test:
     docker:
-      - image: cimg/node:16.13.1-browsers
+      - image: cimg/node:16.13.1-browsers 
     steps:
       # Checkout the code from the branch into the working_directory
       - run: echo ${CIRCLE_BRANCH}
