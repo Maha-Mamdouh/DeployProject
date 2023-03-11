@@ -58,28 +58,18 @@ jobs:
       # Checkout the code from the branch into the working_directory
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
-      - run:
-          command: |
-            google-chrome --version
-            chromedriver --version
-            echo ${CIRCLE_BRANCH}
-          name: Check install
+      - run: echo ${CIRCLE_BRANCH}
       - checkout
       - restore_cache:
           key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
-      - run: npm install
+      - run: npm run frontend:install
       - save_cache:
           key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
             - "node_modules"
-                #     keys:
-                #     - v1-dependencies-{{ checksum "main/udagram/udagram-frontend/package-lock.json" }}
-                #     - v1-dependencies-
-                # # Install project dependencies
-      - run: npm run frontend:install
-                # Test the source code
+      # Test the source code
       - run: npm run frontend:test 
-                # End to End test
+      # End to End test
       - run: npm run frontend:e2e
 
 
