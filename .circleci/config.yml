@@ -78,16 +78,9 @@ jobs:
                 # # Install project dependencies
       - run: npm run frontend:install
                 # Test the source code
-      - run:
-          name: Testing
-          command: npm run frontend:test 
+      - run: npm run frontend:test 
                 # End to End test
-      - run:
-        name: End to End Test
-        command: npm run frontend:e2e
-
-
-
+      - run: npm run frontend:e2e
 
 
   deploy:
