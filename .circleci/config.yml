@@ -52,7 +52,6 @@ jobs:
             npm run api:build
   # deploy step will run only after manual approval
   test:
-    working_directory: ~/project-name
     docker:
       - image: cimg/node:16.13.1-browsers
     steps:
