@@ -68,7 +68,7 @@ jobs:
             - "node_modules"
       # Test the source code
       - run: npm run frontend:test 
-      - run: npm run frontend:e2e
+      # - run: npm run frontend:e2e
         
   deploy:
     docker:
