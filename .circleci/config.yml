@@ -57,10 +57,9 @@ jobs:
     steps:
       # Checkout the code from the branch into the working_directory
       - run: echo ${CIRCLE_BRANCH}
-      - run: echo "$(cat package-lock.json)"
-      - run: ls -a
       - checkout
-
+      - run: ls -a
+      - run: echo "$(cat package-lock.json)"
 
   deploy:
     docker:
