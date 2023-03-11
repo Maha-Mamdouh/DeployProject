@@ -58,7 +58,7 @@ jobs:
       # Checkout the code from the branch into the working_directory
       - run: echo ${CIRCLE_BRANCH}
       - checkout
-      - run: ls -a
+      - run: cd udagram && ls -a
       - run: echo "$(cat package-lock.json)"
 
   deploy:
