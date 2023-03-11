@@ -56,12 +56,12 @@ jobs:
       - image: "cimg/base:stable"
     steps:
       - node/install:
-      node-version: '14.15' 
+          node-version: '14.15' 
       - checkout
       - run:
-        name: Testing the project
-        command: |
-          npm run frontend:test
+          name: Testing the project
+          command: |
+            npm run frontend:test
       - store_test_results:
           path: test-results
   deploy:
