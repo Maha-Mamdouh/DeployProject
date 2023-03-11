@@ -61,6 +61,7 @@ jobs:
       - run: echo "$(cat package-lock.json)"
       - restore_cache:
           key: ng-project-{{.Environment.CIRCLE_BRANCH }}-{{ checksum "package-lock.json" }}
+      - run: npm run frontend:install
   deploy:
     docker:
       - image: "cimg/base:stable"
