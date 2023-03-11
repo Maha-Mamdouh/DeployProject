@@ -53,14 +53,16 @@ jobs:
   # deploy step will run only after manual approval
   test:
     docker:
-      - image: cimg/node:16.13.1-browsers 
+      - image: cimg/node:16.13.1-browsers
+    working_directory: ./udagram/udagram-frontend
     steps:
       # Checkout the code from the branch into the working_directory
       - run: echo ${CIRCLE_BRANCH}
       - checkout
-      - run: cd udagram/udagram-frontend && ls -a
+      - run: cd udagram/udagram-frontend && ls -a && echo "$(cat package-lock.json)"
       - run: echo "$(cat package-lock.json)"
-
+      - restore_cache:
+          key: ng-project-{{.Environment.CIRCLE_BRANCH }}-{{ checksum "package-lock.json" }}
   deploy:
     docker:
       - image: "cimg/base:stable"
