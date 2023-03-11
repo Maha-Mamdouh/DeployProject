@@ -57,8 +57,8 @@ jobs:
     working_directory: ./udagram/udagram-frontend
     steps:
       # Checkout the code from the branch into the working_directory
-      - run: echo ${CIRCLE_BRANCH}
       - checkout
+      - run: echo ${CIRCLE_BRANCH}
       - run: echo "$(cat package-lock.json)"
       - restore_cache:
           key: ng-project-{{.Environment.CIRCLE_BRANCH }}-{{ checksum "package-lock.json" }}
