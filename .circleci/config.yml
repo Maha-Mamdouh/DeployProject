@@ -58,6 +58,10 @@ jobs:
       - node/install:
           node-version: '14.15' 
       - checkout
+      - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "package-lock.json" }}
+          - v1-dependencies-
       - run:
           name: Install Front-End Dependencies
           command: |
