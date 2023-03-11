@@ -60,7 +60,7 @@ jobs:
                 # Restore local dependencies from cache
                 - restore_cache:
                     keys:
-                    - v1-dependencies-{{ checksum "udagram-frontend\package-lock.json" }}
+                    - v1-dependencies-{{ checksum "/udagram/udagram-api/package-lock.json" }}
                     - v1-dependencies-
                 # Install project dependencies
                 - run:
@@ -68,7 +68,7 @@ jobs:
                     command: npm run frontend:install
                 # Cache local dependencies if they don't exist
                 - save_cache:
-                    key: v1-dependencies-{{ checksum ""/udagram-frontend/package-lock.json" }}
+                    key: v1-dependencies-{{ checksum ""/udagram/udagram-api/package-lock.json" }}
                     paths:
                         - node_modules
                 # Test the source code
