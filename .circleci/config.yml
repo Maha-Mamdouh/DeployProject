@@ -59,7 +59,7 @@ jobs:
       - run: echo ${CIRCLE_BRANCH}
       - checkout
       - restore_cache:
-          key: ng-project-{{ .Branch }}-{{ checksum "~/udagram/udagram-frontend/package-lock.json" }}
+          key: ng-project-{{ .Branch }}-{{ checksum "/home/udagram/udagram-frontend/package-lock.json" }}
       - run: npm run frontend:install
       - save_cache:
           key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
