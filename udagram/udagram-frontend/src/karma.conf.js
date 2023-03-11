@@ -2,6 +2,8 @@
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
 module.exports = function (config) {
+  const process = require('process');
+  process.env.CHROME_BIN = require('puppeteer').executablePath();
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -33,10 +35,10 @@ module.exports = function (config) {
       }
     },
     browserNoActivityTimeout: 100000,
-    captureTimeout: 60000, // it was already there
+    captureTimeout: 100000, // it was already there
     browserDisconnectTimeout : 10000,
-    browserDisconnectTolerance : 1,
-    browserNoActivityTimeout : 60000,//by default 10000
+    browserDisconnectTolerance : 2,
+    browserNoActivityTimeout : 100000,//by default 10000
     singleRun: false
   });
 };
