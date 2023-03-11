@@ -52,12 +52,10 @@ jobs:
             npm run api:build
       - run:
           name: front test
-          steps:
-            - run: 
-              command: |
+          command: |
                 npm run frontend:test
-            - store_test_results:
-              path: test-results
+      - store_test_results:
+          path: test-results
   # deploy step will run only after manual approval
   deploy:
     docker:
