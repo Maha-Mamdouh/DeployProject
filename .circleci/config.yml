@@ -56,8 +56,6 @@ jobs:
       - image: cimg/node:16.13.1-browsers
     steps:
       # Checkout the code from the branch into the working_directory
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
       - run: echo ${CIRCLE_BRANCH}
       - checkout
       - restore_cache:
