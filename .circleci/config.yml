@@ -64,7 +64,7 @@ jobs:
       - run:
         name: Testing the project
         command: npm run frontend:test
-              - store_test_results:
+      - store_test_results:
           path: test-results
   deploy:
     docker:
