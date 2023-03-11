@@ -55,15 +55,13 @@ jobs:
     docker:
       - image: "cimg/base:stable"
     steps:
+      - node/install:
+      node-version: '14.15' 
       - checkout
-      - restore_cache:
-        keys:
-          - v1-dependencies-{{ checksum "package-lock.json" }}
-          - v1-dependencies-
-
       - run:
         name: Testing the project
-        command: npm run frontend:test
+        command: |
+          npm run frontend:test
       - store_test_results:
           path: test-results
   deploy:
