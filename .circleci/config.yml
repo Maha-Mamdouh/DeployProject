@@ -53,8 +53,10 @@ jobs:
       - run:
           name: front test
           steps:
-            - run: echo "TODO: test the frontend app"
-            - run: npm run frontend:test
+            - run: 
+              command: |
+              echo "TODO: test the frontend app"
+              npm run frontend:test
             - store_test_results:
               path: test-results
   # deploy step will run only after manual approval
