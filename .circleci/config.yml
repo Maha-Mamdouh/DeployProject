@@ -98,3 +98,6 @@ workflows:
       - test:
           requires:
             - deploy
+      - filters:
+          branches:
+            only: /main\/.*/
