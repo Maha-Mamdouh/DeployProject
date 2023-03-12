@@ -18,4 +18,4 @@ This diagram is provided to demonstrate the pipline process
 
 4- To initial the pipeline, setup the `environment varaibles` in project settings in `CircleCi`app.
 
-4- For every `git push` command. `circleci` application will rerun the pipeline automatically.
+4- For every `git push` command on main branch only. `circleci` application will rerun the pipeline automatically.
