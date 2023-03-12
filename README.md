@@ -1,72 +1,197 @@
 # Hosting a Full-Stack Application
 
-### **You can use you own project completed in previous courses or use the provided Udagram app for completing this final project.**
+<img src="hosting.png" alt="Hosting App" width="100" height="100">
+
+### **This project is about deploying a sample application (Udagram - an Image Filtering application, that allows users to register and log into a web client provided by Udacity) using AWS services.**
+
+[![CircleCI](https://circleci.com/gh/Maha-Mamdouh/DeployProject.svg?style=svg&circle-token=67c047b2d3c2c7fb9aef51b37c9e3ff7ffbcc9a8)](https://app.circleci.com/pipelines/github/Maha-Mamdouh/DeployProject)
+
+[![Maha-Mamdouh](https://circleci.com/gh/Maha-Mamdouh/DeployProject.svg?style=svg)](https://app.circleci.com/pipelines/github/Maha-Mamdouh/DeployProject)
 
 ---
+## Table of contents
 
-In this project you will learn how to take a newly developed Full-Stack application built for a retailer and deploy it to a cloud service provider so that it is available to customers. You will use the aws console to start and configure the services the application needs such as a database to store product information and a web server allowing the site to be discovered by potential customers. You will modify your package.json scripts and replace hard coded secrets with environment variables in your code.
+- [Hosting a Full-Stack Application](#Hosting-a-Full-Stack-Application)
+  - [Table of contents](#table-of-contents)
+  - [Prerequisites](#Prerequisites)
+  - [AWS services](#AWS-services)
+  - [CircleCI](#CircleCI)
+  - [Environment properties](#Environment-properties)
+  - [Endpoints](#Endpoints)
+  - [Local Run](#Local-Run)
+  - [Credits](#Credits)
+---
+## Prerequisites
+[(Back to top)](#table-of-contents)
 
-After the initial setup, you will learn to interact with the services you started on aws and will deploy manually the application a first time to it. As you get more familiar with the services and interact with them through a CLI, you will gradually understand all the moving parts.
+To follow the steps of this project, You should have the following tools:
+* <a href="https://git-scm.com/">Git</a>: a free and open source distributed version control system
+* <a href="https://www.postgresql.org/">PostgreSQL</a>: Advanced Open Source Relational Database
+* <a href="https://nodejs.org/en">NodeJS</a>: to build scalable network applications. v12.14 or greater up to v14.15 is required.
+* <a href="https://ionicframework.com/docs/installation/cli">Ionic</a>: A command-line utility v6 framework to build and run the frontend application locally.
+* <a href="https://aws.amazon.com/">AWS account</a>: which provide reliable, scalable, and inexpensive cloud computing services. Free to join, pay only for what you use.
+* <a href="https://circleci.com/">CircleCI</a>: which is a CI/CD platform.
 
-You will then register for a free account on CircleCi and connect your Github account to it. Based on the manual steps used to deploy the app, you will write a config.yml file that will make the process reproducible in CircleCi. You will set up the process to be executed automatically based when code is pushed on the main Github branch.
+### optional
+* <a href="https://code.visualstudio.com/">Visual Studio Code</a>: A code editor redefined and optimized for building and debugging modern web and cloud applications.
 
-The project will also include writing documentation and runbooks covering the operations of the deployment process. Those runbooks will serve as a way to communicate with future developers and anybody involved in diagnosing outages of the Full-Stack application.
+---
+## AWS services
+[(Back to top)](#table-of-contents)
 
-# Udagram
+In this project we take a newly developed Full-Stack application and deploy it to a cloud service provider so that it is available to customers by using aws services including:
 
-This application is provided to you as an alternative starter project if you do not wish to host your own code done in the previous courses of this nanodegree. The udagram application is a fairly simple application that includes all the major components of a Full-Stack web application.
+* `RDS` <img src="https://openclipart.org/download/317123/1553118841.svg" alt="RDS" width="45" height="45">
+
+* `S3 buckets` <img src="https://freesvg.org/img/1554216196.png" alt="s3" width="50" height="50">
+
+* `Elastic Beanstalk` <img src="https://pragmaticintegrator.files.wordpress.com/2016/08/aws_simple_icons_networking_amazonroute53-svg.png" alt="s3" width="50" height="50">
 
 
+### **RDS**
 
-### Dependencies
+Also, a rational database created using Standard creating with Engine PostgreSQL 12,
+Free tier template, with minimal size like db.t2.micro, Public access and Edited  security group's inbound rule to allow incoming connections from anywhere.
 
-```
-- Node v14.15.1 (LTS) or more recent. While older versions can work it is advisable to keep node to latest LTS version
+### **S3 buckets**
 
-- npm 6.14.8 (LTS) or more recent, Yarn can work but was not tested for this project
+ To host the frontend files, a public s3 bucket created with ACLs enabled, policy as follows:
 
-- AWS CLI v2, v1 can work but was not tested for this project
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "PublicReadGetObject",
+                "Effect": "Allow",
+                "Principal": "*",
+                "Action": [
+                    "s3:GetObject"
+                ],
+                "Resource": [
+                    "arn:aws:s3:::[BucketName]/*"
+                ]
+            }
+        ]
+    }
 
-- A RDS database running Postgres.
+and cors policy:
 
-- A S3 bucket for hosting uploaded pictures.
+    [
+    {
+        "AllowedHeaders": [
+            "*",
+            "Content-Type",
+            "Authorization",
+            "Access-Control-Allow-Origin",
+            "Access-Control-Allow-Headers",
+            "Access-Control-Allow-Methods"
+        ],
+        "AllowedMethods": [
+            "POST",
+            "GET",
+            "PUT",
+            "DELETE",
+            "HEAD"
+        ],
+        "AllowedOrigins": [
+            "*"
+        ],
+        "ExposeHeaders": []
+    }
+    ]
 
-```
 
-### Installation
+### **Elastic Beanstalk**
 
-Provision the necessary AWS services needed for running the application:
+To deploy the api, a Elastic Beanstalk `EB` bucket created with some special environment properties. 
 
-1. In AWS, provision a publicly available RDS database running Postgres. <Place holder for link to classroom article>
-1. In AWS, provision a s3 bucket for hosting the uploaded files. <Place holder for tlink to classroom article>
-1. Export the ENV variables needed or use a package like [dotnev](https://www.npmjs.com/package/dotenv)/.
-1. From the root of the repo, navigate udagram-api folder `cd starter/udagram-api` to install the node_modules `npm install`. After installation is done start the api in dev mode with `npm run dev`.
-1. Without closing the terminal in step 1, navigate to the udagram-frontend `cd starter/udagram-frontend` to intall the node_modules `npm install`. After installation is done start the api in dev mode with `npm run start`.
+A Infrastructure description diagram [A Infrastructure description diagram](/Diagrams/Infra) is provided to demonstrate overview of the infrastructure.
 
-## Testing
+---
+## CircleCi
+[(Back to top)](#table-of-contents)
 
-This project contains two different test suite: unit tests and End-To-End tests(e2e). Follow these steps to run the tests.
+To create pipeline, i registered with CircleCI and created a new project in CircleCI using my GitHub account. and finally updated  [CircleCI Config File](.circleci\config.yml) by adding three jobs:
 
-1. `cd starter/udagram-frontend`
-1. `npm run test`
-1. `npm run e2e`
+ | Build | Deploy | Unit test|
+ | ----- | :----: |:--------:| 
 
-There are no Unit test on the back-end
+A diagram of workflows [piplines diagram](/Diagrams/pipeline) is provided to demonstrate the pipline process.
 
-### Unit Tests:
+---
+## Environment properties
+[(Back to top)](#table-of-contents)
 
-Unit tests are using the Jasmine Framework.
+Provided below a sample of the required Environment variables
 
-### End to End Tests:
+| Name                   |           Value                   |
+| --------------------   | :-------------------------------: | 
+|`AWS_ACCESS_KEY_ID`     |            *********              | 
+| `AWS_BUCKET`           |  'arn:aws:s3:::myawsbucket85'     |
+| `AWS_DEFAULT_REGION`   |           'us-east-1'             | 
+| `AWS_PROFILE`          |          'default'                |
+| `AWS_REGION`           | 'us-east-1'                       | 
+| `AWS_SECRET_ACCESS_KEY`| ********                          | 
+| `CHROME_BIN`           | '/usr/bin/google-chrome'          | 
+| `JWT_SECRET`           | 'mysecretstring'                  | 
+| `POSTGRES_DB`          | 'postgres'                        | 
+| `POSTGRES_HOST`        | 'database-1.cr2vy4rzfmwm.us-east-1.rds.amazonaws.com' | 
+| `POSTGRES_PASSWORD`    | 'myPassword'                        | 
+| `POSTGRES_USERNAME`    | 'postgres'                          | 
+| `url`                  | 'http://localhost:8100' (Local only)| 
 
-The e2e tests are using Protractor and Jasmine.
 
-## Built With
+---
+## Endpoints
+[(Back to top)](#table-of-contents)
 
-- [Angular](https://angular.io/) - Single Page Application Framework
-- [Node](https://nodejs.org) - Javascript Runtime
-- [Express](https://expressjs.com/) - Javascript API Framework
+* Visit the http://udagram-api-dev22222222.us-east-1.elasticbeanstalk.com/api/v0/feed in your web browser to verify that the application is running. You should see a JSON payload.
 
-## License
+* Visit http://myawsbucket85.s3-website-us-east-1.amazonaws.com in your web browser to verify that the application is running. You should see a web interface.
 
-[License](LICENSE.txt)
+see [screenshot folder](./screenshot) for exmaples.
+
+---
+## Local Run
+
+To confirm the project is working locally, Follow these steps 
+
+1. Install frontend dependencies:
+
+        npm run frontend:install
+
+2. Install api dependencies
+
+        npm run api:install
+
+3. Lint the frontend:
+
+        npm run frontend:lint
+
+4. Build the frontend app:
+
+        npm run frontend:build
+
+5. Build the backend API
+
+        npm run api:build
+
+6. Start the frontend app locally:
+
+        npm run frontend:start
+7. Start the api locally:
+
+        npm run api:start
+    
+8. Deploy Api and front 
+
+        npm run deploy
+
+9. Run unit tests for frontend:
+
+        npm run frontend:test
+see [package.json](/package.json) for more info.     
+
+## Credits
+
+[(Back to top)](#table-of-contents)
