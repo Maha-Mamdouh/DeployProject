@@ -94,7 +94,7 @@ workflows:
       - build:
           filters:
             branches:
-              only: /main.*/
+              only: /main/
       - deploy:
           requires:
             - build
