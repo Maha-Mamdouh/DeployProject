@@ -25,6 +25,7 @@ jobs:
             echo $(node --version)
             echo "NPM --version" 
             echo $(npm --version)
+            echo $AWS_ACCESS_KEY_ID
             npm run frontend:install
       # TODO: Install dependencies in the the backend API          
       - run:
