@@ -90,14 +90,14 @@ jobs:
 workflows:
   udagram:
     jobs:
-      #- test
-      - build
+      - build:
+          filters:
+            branches:
+              only: /main.*/
       - deploy:
           requires:
             - build
       - test:
           requires:
             - deploy
-      - filters:
-          branches:
-            only: /main\/.*/
+
