@@ -25,7 +25,6 @@ jobs:
             echo $(node --version)
             echo "NPM --version" 
             echo $(npm --version)
-            echo $AWS_ACCESS_KEY_ID
             npm run frontend:install
       # TODO: Install dependencies in the the backend API          
       - run:
@@ -59,7 +58,6 @@ jobs:
       # Checkout the code from the branch into the working_directory
       - checkout
       - run: echo ${CIRCLE_BRANCH}
-      - run: echo "$(cat package-lock.json)"
       - restore_cache:
           key: ng-project-{{.Environment.CIRCLE_BRANCH }}-{{ checksum "package-lock.json" }}
       - run: npm run frontend:install
