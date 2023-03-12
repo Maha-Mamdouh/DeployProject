@@ -24,16 +24,13 @@
 ## Prerequisites
 [(Back to top)](#table-of-contents)
 
-To follow the steps of this project, You should have the following tools:
-* <a href="https://git-scm.com/">Git</a>: a free and open source distributed version control system
-* <a href="https://www.postgresql.org/">PostgreSQL</a>: Advanced Open Source Relational Database
-* <a href="https://nodejs.org/en">NodeJS</a>: to build scalable network applications. v12.14 or greater up to v14.15 is required.
-* <a href="https://ionicframework.com/docs/installation/cli">Ionic</a>: A command-line utility v6 framework to build and run the frontend application locally.
-* <a href="https://aws.amazon.com/">AWS account</a>: which provide reliable, scalable, and inexpensive cloud computing services. Free to join, pay only for what you use.
-* <a href="https://circleci.com/">CircleCI</a>: which is a CI/CD platform.
+To follow the steps of this project, You should have to install some tools.
+the following tools:
 
-### optional
-* <a href="https://code.visualstudio.com/">Visual Studio Code</a>: A code editor redefined and optimized for building and debugging modern web and cloud applications.
+ | Git | PostgreSQL | NodeJS | Ionic | AWS account|
+ | ----- | :----: |:--------:| :--------:| :--------:| 
+
+For more information, see [Docs/dependencies.md](/Docs/dependencies.md).
 
 ---
 ## AWS services
@@ -47,65 +44,7 @@ In this project we take a newly developed Full-Stack application and deploy it t
 
 * `Elastic Beanstalk` <img src="https://pragmaticintegrator.files.wordpress.com/2016/08/aws_simple_icons_networking_amazonroute53-svg.png" alt="s3" width="50" height="50">
 
-
-### **RDS**
-
-Also, a rational database created using Standard creating with Engine PostgreSQL 12,
-Free tier template, with minimal size like db.t2.micro, Public access and Edited  security group's inbound rule to allow incoming connections from anywhere.
-
-### **S3 buckets**
-
- To host the frontend files, a public s3 bucket created with ACLs enabled, policy as follows:
-
-    {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Sid": "PublicReadGetObject",
-                "Effect": "Allow",
-                "Principal": "*",
-                "Action": [
-                    "s3:GetObject"
-                ],
-                "Resource": [
-                    "arn:aws:s3:::[BucketName]/*"
-                ]
-            }
-        ]
-    }
-
-and cors policy:
-
-    [
-    {
-        "AllowedHeaders": [
-            "*",
-            "Content-Type",
-            "Authorization",
-            "Access-Control-Allow-Origin",
-            "Access-Control-Allow-Headers",
-            "Access-Control-Allow-Methods"
-        ],
-        "AllowedMethods": [
-            "POST",
-            "GET",
-            "PUT",
-            "DELETE",
-            "HEAD"
-        ],
-        "AllowedOrigins": [
-            "*"
-        ],
-        "ExposeHeaders": []
-    }
-    ]
-
-
-### **Elastic Beanstalk**
-
-To deploy the api, a Elastic Beanstalk `EB` bucket created with some special environment properties. 
-
-A Infrastructure description diagram [A Infrastructure description diagram](/Diagrams/Infra) is provided to demonstrate overview of the infrastructure.
+For more inforamtion, see [Infrastructure.md](/Docs/Infrastructure.md).
 
 ---
 ## CircleCi
@@ -116,7 +55,7 @@ To create pipeline, i registered with CircleCI and created a new project in Circ
  | Build | Deploy | Unit test|
  | ----- | :----: |:--------:| 
 
-A diagram of workflows [piplines diagram](/Diagrams/pipeline) is provided to demonstrate the pipline process.
+For detatils about workflows, see  [pipeline.md](/Docs/pipeline.md) .
 
 ---
 ## Environment properties
